@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ncurses.h>
+//gcc snake.c -lncurses
+typedef struct snake snake;
+
+
+
+struct snake{
+  int Xsn,Ysn;
+  snake *next,*prev;
+};
+snake *head;
+
+struct eat{
+	int Havka;
+  int Xeat, Yeat;
+};
+
+int AddSnake(int X, int Y){
+  snake *node=(snake *)malloc(sizeof(snake));
+	node->Xsn=X;node->Ysn=Y;
+	head->prev->next=node;
+	node->prev=head->prev;
+	node->next=head;
+	head->prev=node;
+	
+}
+int PechatRing(){
+  snake *p=head;
+  do{
+    printf("%d, %d \n", p->Xsn , p->Ysn  );
+    p=p->next;
+  }
+  while(p!=head);
+}
+
+int DHead(int x,int y){
+  head=head->prev;
+  head->Xsn=x;head->Ysn=y;
+}
+
+int DeadEat(snake *head){
+	snake *p=head;
+	p=p->next;
+  do{
+		if (head->Xsn==p->Xsn && head->Ysn==p->Ysn){
+    	printf("РљСѓСЃСЊ-РљСѓСЃСЊ-РљСѓСЃСЊ\n");
+			break;
+		}
+    p=p->next;
+  }
+  while(p!=head);
+}
+
+int main(){
+  int key, xHead = 5, yHead = 5;
+ 	int xEda=7,yEda=7;
+
+  //РіРѕР»РѕРІР° Р·РјРµРё
+  snake *node=(snake *)malloc(sizeof(snake));
+  node->Xsn=xHead;node->Ysn=yHead;
+  node->next=node;node->prev=node;
+	head=node;
+
+	
+  PechatRing();
+ 
+
+	
+
+
+  while (!0){
+    if (xHead==xEda && yHead==yEda){
+      AddSnake(xHead,yHead);
+			while(!0){
+				
+				break;
+			}
+		}
+		//game over
+		
+			DeadEat(head);
+
+
+		printf("1y+ 2y- 3x+ 4x-\n");
+    scanf("%d", &key);
+    switch (key) {
+      case KEY_RIGHT:
+      case 1:{
+        yHead++;
+        break;
+      }
+      case KEY_LEFT:
+      case 2:{
+        yHead--;
+        break;
+      }
+      case KEY_DOWN:
+      case 3:{
+        xHead++;
+        break;
+      }
+      case KEY_UP:
+      case 4:{
+        xHead--;
+        break;
+      }
+    }
+		
+		DHead(xHead,yHead);
+    PechatRing();
+    }
+}
